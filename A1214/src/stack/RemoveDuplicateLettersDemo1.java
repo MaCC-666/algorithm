@@ -1,5 +1,4 @@
 package stack;
-
 import java.util.Stack;
 public class RemoveDuplicateLettersDemo1 {
     /*
@@ -13,40 +12,39 @@ public class RemoveDuplicateLettersDemo1 {
     * */
     public String removeDuplicateLetters(String s) {
         //1.去掉重复字母做准备，存储记录字符数量。
-        int[] arr=new int[26];
+        int[] arr = new int[26];
         for (char c : s.toCharArray()) {
-            arr[c-'a']++;
+            arr[c - 'a']++;
         }
         //StringBuilder ans=new StringBuilder(26);
-        Stack<Character> ans=new Stack<>();//用队列也可
-        boolean[] inAns =new boolean[26];
+        Stack<Character> ans = new Stack<>();//用队列也可
+        boolean[] inAns = new boolean[26];
+
         for (char c : s.toCharArray()) {
-            arr[c-'a']--;
-            if(ans.isEmpty()||arr[c-'a']==1){
+            arr[c - 'a']--;
+            if (ans.isEmpty() || arr[c - 'a'] == 0) {
                 ans.push(c);
-                inAns[c-'a']=true;
+                inAns[c - 'a'] = true;
             }
-            if(inAns[c-'a']){
-               continue;
+            if (inAns[c - 'a']) {
+                continue;
             }
-            char ch=ans.peek();
-            if(c-ch<0){
-                if(arr[ch-'a']>0){
-                    inAns[ch-'a']=false;
-                    ans.pop();
-                }
-                ans.push(c);
-                inAns[c-'a']=true;
+            char ch = ans.peek();
+
+            //注意这应该是while
+           // 输入：s = "cbacdcbc"
+            //输出："acdb"
+            if (c < ch && arr[ch - 'a'] > 0) {
+                inAns[ch - 'a'] = false;
+                ans.pop();
             }
-            else if(c-ch>0){
-                ans.push(c);
-                inAns[c-'a']=true;
-            }
+            ans.push(c);
+            inAns[c - 'a'] = true;
         }
-        String str="";
+        StringBuilder str=new StringBuilder();
         while (!ans.isEmpty()){
-           str=ans.pop()+str;
+            str.append(ans.pop());
         }
-        return str;
+        return str.reverse().toString();
     }
 }
