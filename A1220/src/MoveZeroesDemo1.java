@@ -15,13 +15,15 @@ public class MoveZeroesDemo1 {
         int m=0;
 
         for (int i = 0; i < nums.length; i++) {
-            if(nums[i]==0){
-                m=i;
-                while (nums[i]==0){
+            if(nums[m]==0){
+                while (i<nums.length&&nums[i]==0){//注意考虑极端情况，后面如果都是0的话，此循环必然会越界
                     i++;
                 }
-                nums[m]=nums[i];
-                nums[i]=0;
+                //注意考虑极端情况，后面如果都是0的话，此循环必然会越界
+                if(i<nums.length){
+                    nums[m]=nums[i];
+                    nums[i]=0;
+                }
             }
             m++;
         }
